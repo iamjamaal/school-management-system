@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .database import engine, Base
 
+# Import all models here so they're registered with SQLAlchemy
+from .models.user import User
+from .models.class_model import Class
+from .models.student import Student
+
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
@@ -45,10 +50,11 @@ async def health_check():
     }
 
 
-# Include API routers (we'll add these as we build features)
-# from .api.v1 import auth, students, attendance, grades, fees, timetable
-# app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
-# app.include_router(students.router, prefix="/api/v1/students", tags=["Students"])
+# Include API routers
+from .api.v1 import auth, students, classes
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
+app.include_router(students.router, prefix="/api/v1/students", tags=["Students"])
+app.include_router(classes.router, prefix="/api/v1/classes", tags=["Classes"])
 
 
 if __name__ == "__main__":
