@@ -48,6 +48,10 @@ static/uploads/
 htmlcov/
 .pytest_cache/
 
+# Logs
+*.log
+app.log
+
 # OS
 .DS_Store
 Thumbs.db
